@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Forgefit Alpha — Features &amp; Benefits</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy: #0f3460;
+      --blue: #0a7ea4;
+      --ice: #b5d4f4;
+      --white: #ffffff;
+      --bg: #f7f9fc;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --amber: #f59e0b;
+    }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: #1e293b; }
+
+    .alpha-banner {
+      background: var(--amber); color: #1a1a1a;
+      text-align: center; padding: 10px 20px;
+      font-size: 13px; font-weight: 700; letter-spacing: 0.3px;
+      position: sticky; top: 0; z-index: 200;
+    }
+    .alpha-banner a { color: #1a1a1a; text-decoration: underline; }
+
+    nav {
+      background: var(--navy); padding: 0 32px; height: 60px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { font-family: 'Barlow Condensed', sans-serif; font-size: 26px; font-weight: 900; color: var(--white); }
+    .nav-logo span { color: var(--blue); }
+    .nav-badge { background: var(--amber); color: #1a1a1a; font-size: 11px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; padding: 4px 12px; border-radius: 100px; }
+    .nav-links { display: flex; gap: 24px; align-items: center; }
+    .nav-links a { color: var(--ice); text-decoration: none; font-size: 14px; font-weight: 500; opacity: 0.85; transition: opacity 0.15s; }
+    .nav-links a:hover { opacity: 1; }
+    .nav-links a.active { opacity: 1; color: var(--white); font-weight: 700; }
+
+    .page-header {
+      background: linear-gradient(135deg, var(--navy) 0%, #1a4a7a 100%);
+      color: var(--white); padding: 52px 24px 48px; text-align: center;
+    }
+    .page-header .breadcrumb { font-size: 13px; color: var(--ice); opacity: 0.7; margin-bottom: 14px; }
+    .page-header .breadcrumb a { color: var(--ice); text-decoration: none; }
+    .page-header .breadcrumb a:hover { text-decoration: underline; }
+    .page-header h1 { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(32px, 6vw, 52px); font-weight: 900; margin-bottom: 10px; }
+    .page-header p { font-size: 15px; color: var(--ice); opacity: 0.85; max-width: 480px; margin: 0 auto; line-height: 1.6; }
+
+    .section { max-width: 900px; margin: 0 auto; padding: 52px 24px; }
+    .section-label { font-size: 11px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--blue); margin-bottom: 10px; }
+    .section-title { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(28px, 5vw, 42px); font-weight: 800; color: var(--navy); margin-bottom: 12px; }
+    .section-sub { font-size: 15px; color: var(--muted); line-height: 1.65; margin-bottom: 36px; max-width: 560px; }
+
+    /* BENEFITS GRID */
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+      margin-bottom: 56px;
+    }
+    .benefit-card {
+      background: var(--white);
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 28px 24px;
+      display: flex; flex-direction: column; gap: 10px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .benefit-card:hover { border-color: var(--blue); box-shadow: 0 6px 20px rgba(10,126,164,0.1); }
+    .benefit-icon { font-size: 28px; }
+    .benefit-card h3 { font-size: 17px; font-weight: 700; color: var(--navy); }
+    .benefit-card p { font-size: 14px; color: var(--muted); line-height: 1.6; flex: 1; }
+    .benefit-badge {
+      display: inline-block;
+      background: #dbeafe; color: #1e40af;
+      font-size: 10px; font-weight: 800; letter-spacing: 0.5px;
+      text-transform: uppercase; padding: 3px 10px; border-radius: 100px;
+      align-self: flex-start;
+    }
+
+    /* FEATURES LIST */
+    .features-bg { background: var(--white); }
+    .features-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 10px;
+    }
+    .feature-item {
+      display: flex; gap: 12px; align-items: flex-start;
+      font-size: 14px; color: #334155; line-height: 1.5;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .feature-check {
+      width: 22px; height: 22px; border-radius: 50%;
+      background: #dcfce7; color: #166534;
+      font-size: 12px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 1px;
+    }
+
+    /* FREE PRO CALLOUT */
+    .free-pro-bar {
+      background: linear-gradient(135deg, #0f3460 0%, #0a7ea4 100%);
+      color: white; padding: 36px 24px; text-align: center;
+    }
+    .free-pro-bar .fp-badge {
+      display: inline-block; background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3); border-radius: 100px;
+      font-size: 11px; font-weight: 800; letter-spacing: 1px;
+      text-transform: uppercase; padding: 4px 14px; margin-bottom: 12px;
+    }
+    .free-pro-bar h3 { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(22px, 4vw, 32px); font-weight: 800; margin-bottom: 8px; }
+    .free-pro-bar p { font-size: 14px; opacity: 0.85; max-width: 520px; margin: 0 auto; line-height: 1.6; }
+
+    hr.divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+    footer {
+      background: var(--navy); color: rgba(181,212,244,0.6);
+      text-align: center; padding: 28px 24px; font-size: 13px;
+    }
+    footer strong { color: var(--ice); }
+    footer a { color: var(--ice); }
+
+    @media (max-width: 600px) {
+      .section { padding: 36px 20px; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="alpha-banner">
+  ⚠️ &nbsp;Alpha build — bugs are expected. <a href="index.html#feedback">Report anything</a> that feels broken.
+</div>
+
+<nav>
+  <div style="display:flex;align-items:center;gap:14px;">
+    <div class="nav-logo">Forgefit<span>.</span></div>
+    <div class="nav-badge">Alpha</div>
+  </div>
+  <div class="nav-links">
+    <a href="index.html#install">Get the App</a>
+    <a href="updates.html">Updates</a>
+    <a href="features.html" class="active">Features</a>
+    <a href="index.html#feedback">Feedback</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="breadcrumb"><a href="index.html">← Back to Alpha Home</a></div>
+  <h1>Features &amp; Benefits</h1>
+  <p>Everything that's live and testable in the current alpha build.</p>
+</div>
+
+<!-- BENEFITS -->
+<section class="section">
+  <div class="section-label">Why Forgefit</div>
+  <h2 class="section-title">Built different.</h2>
+  <p class="section-sub">Every feature exists because real athletes asked for it. Here's what makes Forgefit worth your time.</p>
+
+  <div class="benefits-grid">
+
+    <div class="benefit-card">
+      <div class="benefit-icon">📅</div>
+      <h3>Flexible Scheduling</h3>
+      <p>Life happens. Missed workouts automatically queue forward to the next open day — no pile-up, no skipped sessions, no guilt.</p>
+      <span class="benefit-badge">Key Differentiator</span>
+    </div>
+
+    <div class="benefit-card">
+      <div class="benefit-icon">🧠</div>
+      <h3>Smart Pre-fill</h3>
+      <p>Every time you start a workout, your last logged weights and reps are automatically loaded. Zero re-entry, maximum focus.</p>
+    </div>
+
+    <div class="benefit-card">
+      <div class="benefit-icon">📓</div>
+      <h3>Contextual Notes</h3>
+      <p>Attach notes to workouts, exercises, plans, or anything else. Tag by context — nutrition, recovery, technique — and search them instantly.</p>
+      <span class="benefit-badge">Key Differentiator</span>
+    </div>
+
+    <div class="benefit-card">
+      <div class="benefit-icon">📈</div>
+      <h3>Plan History Timeline</h3>
+      <p>See every plan you've ever run, when you ran it, and how far you got. Replay any plan with one tap.</p>
+      <span class="benefit-badge">Key Differentiator</span>
+    </div>
+
+    <div class="benefit-card">
+      <div class="benefit-icon">⏱️</div>
+      <h3>Auto Rest Timer</h3>
+      <p>The rest countdown starts the moment you mark a set complete. No tapping, no forgetting — just the right amount of rest, every time.</p>
+    </div>
+
+    <div class="benefit-card">
+      <div class="benefit-icon">🏆</div>
+      <h3>Personal Records</h3>
+      <p>PRs are tracked automatically per exercise. View your progression chart, celebrate milestones, and chase new records every session.</p>
+    </div>
+
+    <div class="benefit-card">
+      <div class="benefit-icon">🔄</div>
+      <h3>Draft Persistence</h3>
+      <p>Accidentally close the app mid-workout? Your session is auto-saved every 10 seconds. Pick up exactly where you left off.</p>
+    </div>
+
+    <div class="benefit-card">
+      <div class="benefit-icon">💪</div>
+      <h3>Cardio + Strength</h3>
+      <p>Log timed cardio exercises with a built-in countdown timer alongside your strength sets — all in one unified workout.</p>
+    </div>
+
+    <div class="benefit-card">
+      <div class="benefit-icon">🗓️</div>
+      <h3>Progress Calendar</h3>
+      <p>See completed workouts and upcoming scheduled sessions on a single calendar. Tap any day to view details or start a scheduled workout.</p>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- FREE PRO CALLOUT -->
+<div class="free-pro-bar">
+  <div class="fp-badge">Alpha Perk</div>
+  <h3>Pro is completely free during alpha.</h3>
+  <p>Every alpha tester gets full Pro access — all features, no limits, no payment info required. Ever. This is our thank-you for helping shape the product.</p>
+</div>
+
+<hr class="divider" />
+
+<!-- FULL FEATURE LIST -->
+<div class="features-bg">
+  <section class="section">
+    <div class="section-label">Full Feature List</div>
+    <h2 class="section-title">Everything included in alpha.</h2>
+    <p class="section-sub">All features below are live and testable today.</p>
+
+    <div class="features-list">
+      <div class="feature-item"><div class="feature-check">✓</div><span>55+ exercise library with muscle groups</span></div>
+      <div class="feature-item"><div class="feature-check">✓</div><span>Curated workout plans (free + pro)</span></div>
+      <div class="feature-item"><div class="feature-check">✓</div><span>Duplicate library plan to My Plans</span></div>
+      <div class="feature-item"><div class="feature-check">✓</div><span>Custom plan creator</span></div>
+      <div class="feature-item"><div class="feature-check">✓</div><span>Custom exercise creator</span></div>
+      <div class="feature-item"><div class="feature-check">✓</div><span>Drag-to-reorder exercises in workout</span></div>
+      <div class="feature-item"><div class="feature-check">✓</div><span>Per-set weight &amp; rep logging</span></div>
+      <div class="feature-item"><div class="feature-check">✓</div><span>Negative weight support (e.g. assisted dips)</span></div>
+      <div class="feature-item"><div class="feature-check">✓</div><span>Target rep range hints from plan</span></div>
+      <div class="feature-item"><div class="feature-check">✓</div><span>Timed cardio with countdown timer</span></div>
+      <div class="feature-item"><div class="feature-check">✓</div><span>Auto rest timer after each set</span></div>
+      <div class="feature-item"><div class="feature-check">✓</div><span>Elapsed workout time counter</span></div>
+      <div class="feature-item"><div class="feature-check">✓</div><span>Screen stays awake during workout</span></div>
+      <div class="feature-item"><div class="feature-check">✓</div><span>Workout draft auto-save &amp; resume</span></div>
+      <div class="feature-item"><div class="feature-check">✓</div><span>Last-session weight/rep pre-fill</span></div>
+      <div class="feature-item"><div class="feature-check">✓</div><span>Workout complete summary (PRs, volume)</span></div>
+      <div class="feature-item"><div class="feature-check">✓</div><span>Repeat any past workout</span></div>
+      <div class="feature-item"><div class="feature-check">✓</div><span>Edit completed workout sessions</span></div>
+      <div class="feature-item"><div class="feature-check">✓</div><span>Weekly volume &amp; streak stats</span></div>
+      <div class="feature-item"><div class="feature-check">✓</div><span>Monthly workout calendar</span></div>
+      <div class="feature-item"><div class="feature-check">✓</div><span>Scheduled workouts on calendar</span></div>
+      <div class="feature-item"><div class="feature-check">✓</div><span>Start scheduled workout from calendar</span></div>
+      <div class="feature-item"><div class="feature-check">✓</div><span>Personal records per exercise</span></div>
+      <div class="feature-item"><div class="feature-check">✓</div><span>PR progression chart</span></div>
+      <div class="feature-item"><div class="feature-check">✓</div><span>Body weight log &amp; chart</span></div>
+      <div class="feature-item"><div class="feature-check">✓</div><span>Flexible schedule with auto-cascade</span></div>
+      <div class="feature-item"><div class="feature-check">✓</div><span>Rolling 7-day schedule window</span></div>
+      <div class="feature-item"><div class="feature-check">✓</div><span>Rest day enforcement on schedule</span></div>
+      <div class="feature-item"><div class="feature-check">✓</div><span>Notes with tags, search &amp; pin</span></div>
+      <div class="feature-item"><div class="feature-check">✓</div><span>Per-exercise personal notes</span></div>
+      <div class="feature-item"><div class="feature-check">✓</div><span>Plan history timeline</span></div>
+      <div class="feature-item"><div class="feature-check">✓</div><span>Light / Dark / System theme</span></div>
+      <div class="feature-item"><div class="feature-check">✓</div><span>kg / lbs unit toggle</span></div>
+      <div class="feature-item"><div class="feature-check">✓</div><span>Haptic feedback throughout</span></div>
+      <div class="feature-item"><div class="feature-check">✓</div><span>Freemium gates (Pro upgrade)</span></div>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <strong>Forgefit Technologies LLC</strong> &nbsp;·&nbsp; Alpha Build &nbsp;·&nbsp;
+  <a href="mailto:hello@forgefit.tech">hello@forgefit.tech</a>
+</footer>
+
+</body>
+</html>

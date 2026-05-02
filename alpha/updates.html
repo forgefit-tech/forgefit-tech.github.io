@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Forgefit Alpha — Update History</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy: #0f3460;
+      --blue: #0a7ea4;
+      --ice: #b5d4f4;
+      --white: #ffffff;
+      --bg: #f7f9fc;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --amber: #f59e0b;
+    }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: #1e293b; }
+
+    .alpha-banner {
+      background: var(--amber); color: #1a1a1a;
+      text-align: center; padding: 10px 20px;
+      font-size: 13px; font-weight: 700; letter-spacing: 0.3px;
+      position: sticky; top: 0; z-index: 200;
+    }
+    .alpha-banner a { color: #1a1a1a; text-decoration: underline; }
+
+    nav {
+      background: var(--navy); padding: 0 32px; height: 60px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { font-family: 'Barlow Condensed', sans-serif; font-size: 26px; font-weight: 900; color: var(--white); }
+    .nav-logo span { color: var(--blue); }
+    .nav-badge { background: var(--amber); color: #1a1a1a; font-size: 11px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; padding: 4px 12px; border-radius: 100px; }
+    .nav-links { display: flex; gap: 24px; align-items: center; }
+    .nav-links a { color: var(--ice); text-decoration: none; font-size: 14px; font-weight: 500; opacity: 0.85; transition: opacity 0.15s; }
+    .nav-links a:hover { opacity: 1; }
+    .nav-links a.active { opacity: 1; color: var(--white); font-weight: 700; }
+
+    .page-header {
+      background: linear-gradient(135deg, var(--navy) 0%, #1a4a7a 100%);
+      color: var(--white); padding: 52px 24px 48px; text-align: center;
+    }
+    .page-header .breadcrumb { font-size: 13px; color: var(--ice); opacity: 0.7; margin-bottom: 14px; }
+    .page-header .breadcrumb a { color: var(--ice); text-decoration: none; }
+    .page-header .breadcrumb a:hover { text-decoration: underline; }
+    .page-header h1 { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(32px, 6vw, 52px); font-weight: 900; margin-bottom: 10px; }
+    .page-header p { font-size: 15px; color: var(--ice); opacity: 0.85; max-width: 480px; margin: 0 auto; line-height: 1.6; }
+
+    .section { max-width: 760px; margin: 0 auto; padding: 52px 24px; }
+
+    /* CHANGELOG */
+    .changelog-wrap { display: flex; flex-direction: column; gap: 0; }
+    .changelog-day {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      grid-template-rows: auto auto;
+      gap: 0 16px;
+      padding-bottom: 36px;
+      position: relative;
+    }
+    .changelog-day::before {
+      content: '';
+      position: absolute;
+      left: 10px;
+      top: 24px;
+      bottom: 0;
+      width: 2px;
+      background: var(--border);
+    }
+    .changelog-day:last-child::before { display: none; }
+    .changelog-dot {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: var(--border);
+      border: 3px solid var(--white);
+      box-shadow: 0 0 0 2px var(--border);
+      grid-row: 1;
+      grid-column: 1;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+    .changelog-dot.today { background: var(--blue); box-shadow: 0 0 0 2px var(--blue); }
+    .changelog-date {
+      font-size: 13px; font-weight: 700; color: var(--muted);
+      text-transform: uppercase; letter-spacing: 0.5px;
+      grid-row: 1; grid-column: 2;
+      display: flex; align-items: center; gap: 10px; padding-top: 2px;
+    }
+    .today-tag {
+      background: var(--blue); color: white;
+      font-size: 10px; font-weight: 800; letter-spacing: 1px;
+      padding: 2px 8px; border-radius: 100px;
+    }
+    .changelog-version {
+      font-size: 16px; font-weight: 700; color: var(--navy);
+      grid-row: 2; grid-column: 2;
+      margin: 6px 0 12px;
+    }
+    .changelog-entries {
+      grid-row: 3; grid-column: 2;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .changelog-entry {
+      display: flex; gap: 10px; align-items: flex-start;
+      font-size: 14px; color: #334155; line-height: 1.55;
+    }
+    .entry-tag {
+      font-size: 10px; font-weight: 800; letter-spacing: 0.5px;
+      text-transform: uppercase; padding: 3px 8px; border-radius: 6px;
+      flex-shrink: 0; margin-top: 1px;
+    }
+    .tag-new { background: #dcfce7; color: #166534; }
+    .tag-fix { background: #fee2e2; color: #991b1b; }
+    .tag-improve { background: #dbeafe; color: #1e40af; }
+
+    footer {
+      background: var(--navy); color: rgba(181,212,244,0.6);
+      text-align: center; padding: 28px 24px; font-size: 13px;
+    }
+    footer strong { color: var(--ice); }
+    footer a { color: var(--ice); }
+
+    @media (max-width: 600px) {
+      .section { padding: 36px 20px; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="alpha-banner">
+  ⚠️ &nbsp;Alpha build — bugs are expected. <a href="index.html#feedback">Report anything</a> that feels broken.
+</div>
+
+<nav>
+  <div style="display:flex;align-items:center;gap:14px;">
+    <div class="nav-logo">Forgefit<span>.</span></div>
+    <div class="nav-badge">Alpha</div>
+  </div>
+  <div class="nav-links">
+    <a href="index.html#install">Get the App</a>
+    <a href="updates.html" class="active">Updates</a>
+    <a href="features.html">Features</a>
+    <a href="index.html#feedback">Feedback</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="breadcrumb"><a href="index.html">← Back to Alpha Home</a></div>
+  <h1>Update History</h1>
+  <p>A running log of every improvement and fix, updated with each release.</p>
+</div>
+
+<section class="section">
+  <div class="changelog-wrap">
+
+    <!-- Apr 20, 2026 -->
+    <div class="changelog-day">
+      <div class="changelog-dot today"></div>
+      <div class="changelog-date">April 20, 2026 <span class="today-tag">TODAY</span></div>
+      <div class="changelog-version">v0.3.4 — Rolling 7-Day Schedule Window</div>
+      <div class="changelog-entries">
+        <div class="changelog-entry">
+          <span class="entry-tag tag-new">New</span>
+          <span>Rolling window refill: after any workout is completed, the schedule automatically fills the next 7 calendar days with available non-rest workout slots. The cycle position is preserved — Day 3 always follows Day 2.</span>
+        </div>
+        <div class="changelog-entry">
+          <span class="entry-tag tag-fix">Fix</span>
+          <span>Schedule no longer generates more than 7 calendar days of entries. Plans with 6x/week frequency now correctly schedule only 3 sessions per week when 4 rest days are set.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Apr 20, 2026 — v0.3.3 -->
+    <div class="changelog-day">
+      <div class="changelog-dot"></div>
+      <div class="changelog-date">April 20, 2026</div>
+      <div class="changelog-version">v0.3.3 — Schedule Rest Day Enforcement</div>
+      <div class="changelog-entries">
+        <div class="changelog-entry">
+          <span class="entry-tag tag-fix">Fix</span>
+          <span>Schedule now strictly enforces rest days — workouts are never placed on rest day dates. Opening the Schedule screen cleans up any stale entries that landed on rest days.</span>
+        </div>
+        <div class="changelog-entry">
+          <span class="entry-tag tag-fix">Fix</span>
+          <span>Post-completion entry now skips forward past rest day dates when placing the next scheduled workout.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Apr 20, 2026 — v0.3.2 -->
+    <div class="changelog-day">
+      <div class="changelog-dot"></div>
+      <div class="changelog-date">April 20, 2026</div>
+      <div class="changelog-version">v0.3.2 — Workout Calendar Fixes</div>
+      <div class="changelog-entries">
+        <div class="changelog-entry">
+          <span class="entry-tag tag-fix">Fix</span>
+          <span>Workout Calendar now uses local time — no more UTC rollover showing tomorrow's date after 10 PM.</span>
+        </div>
+        <div class="changelog-entry">
+          <span class="entry-tag tag-improve">Improve</span>
+          <span>Today is now styled in amber with a distinct border, clearly distinguishable from completed days (blue). A "Today" legend entry was added.</span>
+        </div>
+        <div class="changelog-entry">
+          <span class="entry-tag tag-fix">Fix</span>
+          <span>Calendar now reads from the actual schedule — rest days no longer appear as scheduled workouts on the calendar.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Apr 19, 2026 -->
+    <div class="changelog-day">
+      <div class="changelog-dot"></div>
+      <div class="changelog-date">April 19, 2026</div>
+      <div class="changelog-version">v0.3.1 — Duplicate to My Plans</div>
+      <div class="changelog-entries">
+        <div class="changelog-entry">
+          <span class="entry-tag tag-new">New</span>
+          <span>Any Library plan can now be duplicated into My Plans as "My [Plan Name]" — fully editable. A confirmation alert lets you jump straight to the plan editor.</span>
+        </div>
+        <div class="changelog-entry">
+          <span class="entry-tag tag-new">New</span>
+          <span>Pro gate on duplication: free users cannot duplicate Pro plans and are redirected to the upgrade screen.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Apr 19, 2026 — v0.3.0 -->
+    <div class="changelog-day">
+      <div class="changelog-dot"></div>
+      <div class="changelog-date">April 19, 2026</div>
+      <div class="changelog-version">v0.3.0 — Rest Day Shift Bug Fix</div>
+      <div class="changelog-entries">
+        <div class="changelog-entry">
+          <span class="entry-tag tag-fix">Fix</span>
+          <span>Toggling a rest day no longer shifts the entire workout cycle. The function now preserves existing future workout entries and only fills the gap forward.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Apr 18, 2026 -->
+    <div class="changelog-day">
+      <div class="changelog-dot"></div>
+      <div class="changelog-date">April 18, 2026</div>
+      <div class="changelog-version">v0.2.9 — UTC Date Rollover Fix</div>
+      <div class="changelog-entries">
+        <div class="changelog-entry">
+          <span class="entry-tag tag-fix">Fix</span>
+          <span>All date computations now use local time. After 10 PM, the app no longer shows tomorrow's workout as today's.</span>
+        </div>
+        <div class="changelog-entry">
+          <span class="entry-tag tag-new">New</span>
+          <span>No Plan row on the Plans tab now shows a clear "Select" button when a plan is active, and a confirmation dialog prevents accidental schedule clearing.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Apr 17, 2026 -->
+    <div class="changelog-day">
+      <div class="changelog-dot"></div>
+      <div class="changelog-date">April 17, 2026</div>
+      <div class="changelog-version">v0.2.8 — Edit Workout from History</div>
+      <div class="changelog-entries">
+        <div class="changelog-entry">
+          <span class="entry-tag tag-new">New</span>
+          <span>Tapping "Edit Workout" in Lift History now opens the active workout screen pre-loaded with all session data. No separate edit page needed.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Apr 16, 2026 -->
+    <div class="changelog-day">
+      <div class="changelog-dot"></div>
+      <div class="changelog-date">April 16, 2026</div>
+      <div class="changelog-version">v0.2.7 — Scheduled Workouts on Calendar</div>
+      <div class="changelog-entries">
+        <div class="changelog-entry">
+          <span class="entry-tag tag-new">New</span>
+          <span>Scheduled workouts now appear on the Progress tab calendar as outlined circles, distinct from completed workout days.</span>
+        </div>
+        <div class="changelog-entry">
+          <span class="entry-tag tag-new">New</span>
+          <span>Tapping a scheduled day opens a detail sheet with the workout name, plan info, and a Start Workout button.</span>
+        </div>
+        <div class="changelog-entry">
+          <span class="entry-tag tag-improve">Improve</span>
+          <span>Calendar forward navigation is now unrestricted — browse future months to see upcoming scheduled workouts.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Apr 16, 2026 — v0.2.6 -->
+    <div class="changelog-day">
+      <div class="changelog-dot"></div>
+      <div class="changelog-date">April 16, 2026</div>
+      <div class="changelog-version">v0.2.6 — Schedule Automation</div>
+      <div class="changelog-entries">
+        <div class="changelog-entry">
+          <span class="entry-tag tag-new">New</span>
+          <span>Flexible schedule cascade: missed workouts shift forward one day independently — no pile-up.</span>
+        </div>
+        <div class="changelog-entry">
+          <span class="entry-tag tag-new">New</span>
+          <span>Auto-schedule: completing a plan-linked workout automatically creates a new schedule entry, keeping your schedule self-sustaining.</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <p style="color: var(--muted); font-size: 13px; margin-top: 8px; padding-left: 28px;">
+    More updates will appear here as they ship.
+  </p>
+</section>
+
+<footer>
+  <strong>Forgefit Technologies LLC</strong> &nbsp;·&nbsp; Alpha Build &nbsp;·&nbsp;
+  <a href="mailto:hello@forgefit.tech">hello@forgefit.tech</a>
+</footer>
+
+</body>
+</html>

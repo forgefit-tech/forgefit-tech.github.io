@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Forgefit Alpha</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #0f3460;
+      --blue: #0a7ea4;
+      --ice: #b5d4f4;
+      --white: #ffffff;
+      --bg: #f7f9fc;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --amber: #f59e0b;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: #1e293b;
+      min-height: 100vh;
+    }
+
+    /* BANNER */
+    .alpha-banner {
+      background: var(--amber);
+      color: #1a1a1a;
+      text-align: center;
+      padding: 10px 20px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      position: sticky;
+      top: 0;
+      z-index: 200;
+    }
+    .alpha-banner a { color: #1a1a1a; text-decoration: underline; text-underline-offset: 2px; }
+
+    /* NAV */
+    nav {
+      background: var(--navy);
+      padding: 0 32px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 26px;
+      font-weight: 900;
+      color: var(--white);
+      letter-spacing: -0.5px;
+    }
+    .nav-logo span { color: var(--blue); }
+    .nav-badge {
+      background: var(--amber);
+      color: #1a1a1a;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 100px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+    .nav-links a {
+      color: var(--ice);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      opacity: 0.85;
+      transition: opacity 0.15s;
+    }
+    .nav-links a:hover { opacity: 1; }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(135deg, var(--navy) 0%, #1a4a7a 100%);
+      color: var(--white);
+      padding: 72px 24px 64px;
+      text-align: center;
+    }
+    .hero-eyebrow {
+      display: inline-block;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 6px 18px;
+      margin-bottom: 24px;
+      color: var(--ice);
+    }
+    .hero h1 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(40px, 8vw, 72px);
+      font-weight: 900;
+      line-height: 1.0;
+      margin-bottom: 20px;
+      letter-spacing: -1px;
+    }
+    .hero h1 em { color: var(--amber); font-style: normal; }
+    .hero p {
+      font-size: clamp(15px, 2.5vw, 18px);
+      color: var(--ice);
+      max-width: 560px;
+      margin: 0 auto 36px;
+      line-height: 1.65;
+      opacity: 0.9;
+    }
+
+    /* SUBPAGE NAV CARDS */
+    .subpage-nav {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      padding: 48px 24px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .subpage-card {
+      flex: 1;
+      min-width: 200px;
+      max-width: 320px;
+      background: var(--white);
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 28px 24px;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.2s, transform 0.15s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .subpage-card:hover {
+      border-color: var(--blue);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(10,126,164,0.12);
+    }
+    .subpage-card-icon { font-size: 28px; }
+    .subpage-card h3 {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--navy);
+    }
+    .subpage-card p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+    .subpage-card-arrow {
+      margin-top: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--blue);
+    }
+
+    /* GET THE APP */
+    .section {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 52px 24px;
+    }
+    .section-label {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(28px, 5vw, 42px);
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 12px;
+    }
+    .section-sub {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 36px;
+      max-width: 560px;
+    }
+
+    .get-app-inner {
+      display: flex;
+      gap: 40px;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+    .get-app-qr {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    .get-app-qr img {
+      width: 180px;
+      height: 180px;
+      border-radius: 16px;
+      border: 3px solid var(--border);
+    }
+    .get-app-qr-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      text-align: center;
+    }
+    .get-app-steps {
+      flex: 1;
+      min-width: 220px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .get-app-step {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .step-num {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--navy);
+      color: white;
+      font-size: 14px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .step-text { font-size: 15px; color: #334155; line-height: 1.55; }
+    .step-text a { color: var(--blue); font-weight: 600; }
+    .step-text strong { color: var(--navy); }
+
+    .get-app-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--blue);
+      color: white;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 12px 24px;
+      border-radius: 10px;
+      text-decoration: none;
+      margin-top: 8px;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .get-app-link:hover { background: var(--navy); transform: translateY(-1px); }
+
+    /* FREE PRO CALLOUT */
+    .free-pro-bar {
+      background: linear-gradient(135deg, #0f3460 0%, #0a7ea4 100%);
+      color: white;
+      padding: 36px 24px;
+      text-align: center;
+    }
+    .free-pro-bar .fp-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 4px 14px;
+      margin-bottom: 12px;
+    }
+    .free-pro-bar h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(22px, 4vw, 32px);
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+    .free-pro-bar p {
+      font-size: 14px;
+      opacity: 0.85;
+      max-width: 520px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* FEEDBACK */
+    .bug-section { background: var(--white); }
+    .bug-cards { display: flex; gap: 24px; flex-wrap: wrap; }
+    .bug-card {
+      flex: 1; min-width: 220px;
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 28px 24px;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .bug-card-icon { font-size: 28px; }
+    .bug-card h4 { font-size: 17px; font-weight: 700; color: var(--navy); }
+    .bug-card p { font-size: 14px; color: var(--muted); line-height: 1.6; flex: 1; }
+    .bug-card-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--navy); color: white;
+      font-size: 14px; font-weight: 700;
+      padding: 11px 22px; border-radius: 10px;
+      text-decoration: none; align-self: flex-start;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .bug-card-btn:hover { background: var(--blue); transform: translateY(-1px); }
+    .bug-card-btn.slack { background: #4a154b; }
+    .bug-card-btn.slack:hover { background: #611f69; }
+
+    hr.divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+    /* FOOTER */
+    footer {
+      background: var(--navy);
+      color: rgba(181,212,244,0.6);
+      text-align: center;
+      padding: 28px 24px;
+      font-size: 13px;
+    }
+    footer strong { color: var(--ice); }
+
+    @media (max-width: 600px) {
+      .hero { padding: 52px 20px 48px; }
+      .section { padding: 40px 20px; }
+      .get-app-inner { flex-direction: column; align-items: center; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ALPHA DISCLAIMER BANNER -->
+<div class="alpha-banner">
+  ⚠️ &nbsp;Alpha build — bugs are expected. Please <a href="#feedback">report anything</a> that feels broken or off.
+</div>
+
+<!-- NAV -->
+<nav>
+  <div style="display:flex;align-items:center;gap:14px;">
+    <div class="nav-logo">Forgefit<span>.</span></div>
+    <div class="nav-badge">Alpha</div>
+  </div>
+  <div class="nav-links">
+    <a href="#install">Get the App</a>
+    <a href="updates.html">Updates</a>
+    <a href="features.html">Features</a>
+    <a href="#feedback">Feedback</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-eyebrow">🔒 Closed Alpha — Invite Only</div>
+  <h1>Train smarter.<br><em>Track everything.</em></h1>
+  <p>You're among the first to experience Forgefit — a no-nonsense workout tracker built for athletes who care about progress, not fluff. Thanks for helping shape it.</p>
+</header>
+
+<!-- SUBPAGE NAV CARDS -->
+<div class="subpage-nav">
+  <a href="updates.html" class="subpage-card">
+    <div class="subpage-card-icon">📋</div>
+    <h3>Update History</h3>
+    <p>See every improvement and bug fix, updated with each release.</p>
+    <div class="subpage-card-arrow">View updates →</div>
+  </a>
+  <a href="features.html" class="subpage-card">
+    <div class="subpage-card-icon">✨</div>
+    <h3>Features &amp; Benefits</h3>
+    <p>Everything that's live and testable in the current alpha build.</p>
+    <div class="subpage-card-arrow">View features →</div>
+  </a>
+</div>
+
+<hr class="divider" />
+
+<!-- GET THE APP -->
+<div style="background: var(--white);">
+  <section class="section" id="install">
+    <div class="section-label">Get the App</div>
+    <h2 class="section-title">Join the alpha.</h2>
+    <p class="section-sub">You'll need the Expo Go app on your iPhone or Android device. It takes about two minutes to get up and running.</p>
+
+    <div class="get-app-inner">
+
+      <!-- QR Code -->
+      <div class="get-app-qr">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=exps%3A%2F%2F8081-iity75ugi8mcqaycx3xz4-03400e9e.us2.manus.computer&bgcolor=ffffff&color=0f3460&margin=2" alt="Scan to open in Expo Go" />
+        <span class="get-app-qr-label">Scan with Expo Go</span>
+      </div>
+
+      <!-- Steps -->
+      <div class="get-app-steps">
+        <div class="get-app-step">
+          <div class="step-num">1</div>
+          <div class="step-text">
+            Download <a href="https://apps.apple.com/app/expo-go/id982107779" target="_blank">Expo Go</a> from the App Store
+            or <a href="https://play.google.com/store/apps/details?id=host.exp.exponent" target="_blank">Google Play</a>.
+          </div>
+        </div>
+        <div class="get-app-step">
+          <div class="step-num">2</div>
+          <div class="step-text">
+            Open Expo Go and tap <strong>Scan QR Code</strong>, then point your camera at the code on the left.
+          </div>
+        </div>
+        <div class="get-app-step">
+          <div class="step-num">3</div>
+          <div class="step-text">
+            The app will load in a few seconds. You're in — start exploring!
+          </div>
+        </div>
+
+        <a href="exps://8081-iity75ugi8mcqaycx3xz4-03400e9e.us2.manus.computer" class="get-app-link">
+          Open in Expo Go →
+        </a>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<hr class="divider" />
+
+<!-- FREE PRO CALLOUT -->
+<div class="free-pro-bar">
+  <div class="fp-badge">Alpha Perk</div>
+  <h3>Pro is completely free during alpha.</h3>
+  <p>Every alpha tester gets full Pro access — all features, no limits, no payment info required. Ever. This is our thank-you for helping shape the product.</p>
+</div>
+
+<hr class="divider" />
+
+<!-- FEEDBACK -->
+<div class="bug-section">
+  <section class="section" id="feedback">
+    <div class="section-label">Feedback &amp; Bugs</div>
+    <h2 class="section-title">Found something? Tell us.</h2>
+    <p class="section-sub">No bug report is too small. Crashes, weird UI, missing data, confusing flows — all of it helps.</p>
+    <div class="bug-cards">
+      <div class="bug-card">
+        <div class="bug-card-icon">💬</div>
+        <h4>Text us directly</h4>
+        <p>Just send a text describing what happened — a screenshot is always helpful but never required.</p>
+        <a href="sms:+1" class="bug-card-btn">Send a text</a>
+      </div>
+      <div class="bug-card">
+        <div class="bug-card-icon">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="28" height="28" rx="6" fill="#4a154b"/>
+            <path d="M7.5 16.5C7.5 17.328 8.172 18 9 18C9.828 18 10.5 17.328 10.5 16.5V12C10.5 11.172 9.828 10.5 9 10.5C8.172 10.5 7.5 11.172 7.5 12V16.5Z" fill="white"/>
+            <path d="M12 19.5C12 20.328 12.672 21 13.5 21C14.328 21 15 20.328 15 19.5V8.5C15 7.672 14.328 7 13.5 7C12.672 7 12 8.5V19.5Z" fill="white"/>
+            <path d="M16.5 16.5C16.5 17.328 17.172 18 18 18C18.828 18 19.5 17.328 19.5 16.5V12C19.5 11.172 18.828 10.5 18 10.5C17.172 10.5 16.5 11.172 16.5 12V16.5Z" fill="white"/>
+          </svg>
+        </div>
+        <h4>Join our Slack</h4>
+        <p>Post in <strong>#forgefit-alpha</strong> — share bugs, ideas, or questions. We respond fast.</p>
+        <a href="https://join.slack.com/t/forgelabstalk/shared_invite/zt-3vm1lq1lg-BZ87mDZmlUfx6BlQfnGzCw" target="_blank" class="bug-card-btn slack">Join Slack</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <strong>Forgefit Technologies LLC</strong> &nbsp;·&nbsp; Alpha Build &nbsp;·&nbsp; <a href="mailto:hello@forgefit.tech" style="color:var(--ice);">hello@forgefit.tech</a>
+</footer>
+
+</body>
+</html>
